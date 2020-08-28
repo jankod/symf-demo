@@ -2,9 +2,37 @@
 
 
 {% block body %}
-    Ovo je body
+    Pagination 2
 
-    <p>A name je {{ name }}</p>
 
-    {{ daska.name }}
+
+    <p>Name {{ name }}</p>
+    <p>NAme2 {% trans %}hello {% endtrans %}</p>
+
+    <br>
+    {# total items count #}
+    <div class="count">
+        {{ pagination.getTotalItemCount }}
+    </div>
+    <table class="table table-bordered">
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'r.id') }}</th>
+            <th{% if pagination.isSorted('r.name') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Name', 'r.name') }}
+            </th>
+        </tr>
+
+        {% for r in pagination %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
 {% endblock %}
